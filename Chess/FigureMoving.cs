@@ -22,7 +22,7 @@
             this.figure = (Figure)move[0];
             this.from = new Square(move.Substring(1, 2));
             this.to = new Square(move.Substring(3, 2));
-            this.promotion = (move.Length == 6) ? (Figure)move[5];
+            this.promotion = (move.Length == 6) ? (Figure)move[5] : Figure.none;
 
         }
     }
