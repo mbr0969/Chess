@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-//Video  00:41
+//Video 
 
 namespace Chess
 {
@@ -19,6 +19,7 @@ namespace Chess
 
         Chess(Board board) {
             this.board = board;
+            this.fen = board.fen;
         }
 
         public Chess Move(string move) {
@@ -26,15 +27,15 @@ namespace Chess
             FigureMoving fm = new FigureMoving(move);
             Board nextBoard = board.Move(fm);
             Chess nextChess = new Chess(nextBoard);
+            
             return nextChess;
         }
 
-        public char getFingureAt(int x, int y) {
+        public char getFigureAt(int x, int y) {
 
             Square square = new Square(x, y);
             Figure f = board.GetFigureAt(square);
-
-            return f == Figure.none ? '.' : (char)f;
+            return f == Figure.none  ?  '.'  :  (char)f;
            
         }
 
