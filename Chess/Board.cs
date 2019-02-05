@@ -70,6 +70,10 @@ namespace Chess
                 if(y > 0)
                     sb.Append('/');
             }
+
+            string eight = "11111111";
+
+
             return sb.ToString();
 
         }
