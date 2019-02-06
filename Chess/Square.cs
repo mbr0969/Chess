@@ -23,7 +23,6 @@ namespace Chess
 
                 x = e2[0] - 'a';
                 y = e2[1] - '1';
-
             }
             else
                 this = none;

@@ -50,11 +50,11 @@ namespace Chess
 
                 case Figure.whiteRook:
                 case Figure.blackRook:
-                    return false;
+                    return (fm.SingX == 0 || fm.SingY == 0 ) && CanStraightMove();
 
                 case Figure.whiteBishop:
                 case Figure.blackBishop:
-                    return false;
+                    return (fm.SingX != 0 && fm.SingY != 0) && CanStraightMove(); ;
 
                 case Figure.whiteKnight:
                 case Figure.blackKnight:
@@ -62,13 +62,16 @@ namespace Chess
 
                 case Figure.whitePawn:
                 case Figure.blackPawn:
-                    return false;
+                    return CanPawnMove();
 
                 default: return false;
 
             }           
         }
 
+        private bool CanPawnMove() {
+           
+        }
 
         private bool CanKingMove() {
             if (fm.AbsDeltaX <= 1 && fm.AbsDeltaY <= 1)
