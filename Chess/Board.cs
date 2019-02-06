@@ -72,7 +72,8 @@ namespace Chess
             }
 
             string eight = "11111111";
-
+            for (int j = 8; j >= 2; j--)
+                sb.Replace(eight.Substring(0, j), j.ToString());
 
             return sb.ToString();
 
@@ -96,8 +97,10 @@ namespace Chess
 
         public Board Move(FigureMoving fm) {
 
-            Board next = new Board(fen);
 
+
+
+            Board next = new Board(fen);
             next.SetFigureAt(fm.from, Figure.none);
             next.SetFigureAt(fm.to, fm.promotion == Figure.none? fm.figure : fm.promotion );
 

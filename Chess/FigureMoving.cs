@@ -1,4 +1,6 @@
-﻿namespace Chess
+﻿using System;
+
+namespace Chess
 {
     class FigureMoving {
 
@@ -25,5 +27,16 @@
             this.promotion = (move.Length == 6) ? (Figure)move[5] : Figure.none;
 
         }
+
+        public int DeltaX { get { return to.x - from.x; } }
+        public int DeltaY { get { return to.y - from.y; } }
+
+        public int AbsDeltaX { get { return Math.Abs(DeltaX); } }
+        public int AbsDeltaY { get { return Math.Abs(DeltaY); } }
+
+        public int SingX { get { return Math.Sign(DeltaX); } }
+        public int SingY { get { return Math.Sign(DeltaY); } }
+
+
     }
 }

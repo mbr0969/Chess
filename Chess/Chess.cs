@@ -6,25 +6,31 @@ using System.Threading.Tasks;
 
 //Video 
 
-namespace Chess
-{
+namespace Chess {
+
     public class Chess    {
         public string fen { get; private set;}
         Board board;
+        Moves moves;
+        List<FigureMoving> allMoves;
 
         public Chess(string fen = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1") {
             this.fen = fen;
             board = new Board(fen);
+            moves = new Moves(board);
         }
 
         Chess(Board board) {
             this.board = board;
             this.fen = board.fen;
+            moves = new Moves(board);
         }
 
         public Chess Move(string move) {
-
+                        
             FigureMoving fm = new FigureMoving(move);
+            if (moves.CanMove(fm))
+                return this;
             Board nextBoard = board.Move(fm);
             Chess nextChess = new Chess(nextBoard);
             
@@ -37,6 +43,11 @@ namespace Chess
             Figure f = board.GetFigureAt(square);
             return f == Figure.none  ?  '.'  :  (char)f;
            
+        }
+
+        void FindAllMoves() {
+
+
         }
 
     }

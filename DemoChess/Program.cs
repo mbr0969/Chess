@@ -13,7 +13,8 @@ namespace DemoChess
 
             Chess.Chess  chess = new Chess.Chess();
 
-            while (true) {              
+            while (true) {
+                Console.WriteLine(chess.fen);             
                 Console.WriteLine(ChessToAscii(chess));
                 string move = Console.ReadLine();
                 if (move == "") break;
@@ -25,14 +26,11 @@ namespace DemoChess
 
             string text = "  +-----------------+\n";
             for (int y = 7; y >= 0; y--) {
-
                 text += y  +  1;
                 text += " | ";
-
                 for (int x = 0; x < 8; x++)  {
                     text += chess.getFigureAt(x, y) + " ";
                 }
-
                 text += "| \n";
             }
             text += "  +-----------------+\n";
