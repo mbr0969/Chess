@@ -18,6 +18,7 @@ namespace Chess {
             this.fen = fen;
             board = new Board(fen);
             moves = new Moves(board);
+          
         }
 
         Chess(Board board) {
@@ -47,7 +48,28 @@ namespace Chess {
 
         void FindAllMoves() {
 
+            allMoves = new List<FigureMoving>();
 
+            foreach (FigureOnSquare fs in board.YeldFigures() ) {
+
+                foreach (Square to in Square.YeldSquares()) {
+
+                    FigureMoving fm = new FigureMoving(fs, to);
+
+                    if (moves.CanMove(fm))
+                        allMoves.Add(fm);
+                }
+            }
+        }
+
+        public List<String> GetAllMoves() {
+
+            FindAllMoves();
+            List<String> list = new List<string>();
+            foreach (FigureMoving fm in allMoves) {
+                list.Add(fm.ToString());
+            }
+            return list;
         }
 
     }

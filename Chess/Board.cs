@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Text;
 
 namespace Chess
@@ -47,6 +48,14 @@ namespace Chess
                     figures[x, y] = lines[7 - y][x] == '.' ? Figure.none : (Figure)lines[7 - y][x];
         }
 
+       public IEnumerable<FigureOnSquare> YeldFigures() {
+            foreach (Square square in Square.YeldSquares()) {
+
+                if (GetFigureAt(square).GetColor() == moveColor) {
+                    yield return new FigureOnSquare(GetFigureAt(square), square);
+                }
+            }
+        }
 
         void InitColor(string data) {
 
@@ -96,9 +105,6 @@ namespace Chess
         }
 
         public Board Move(FigureMoving fm) {
-
-
-
 
             Board next = new Board(fen);
             next.SetFigureAt(fm.from, Figure.none);

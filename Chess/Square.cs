@@ -1,4 +1,7 @@
-﻿namespace Chess
+﻿using System;
+using System.Collections.Generic;
+
+namespace Chess
 {
    struct Square {
 
@@ -34,6 +37,8 @@
 
         }
 
+        public string Name { get { return ((char)('a' + x)).ToString() + (y + 1).ToString(); } }
+
         public static bool operator ==(Square a, Square b) {
 
             return a.x == b.x && a.y == b.y;
@@ -44,5 +49,13 @@
             return a.x != b.x && a.y != b.y;
         }
 
+       public static IEnumerable<Square> YeldSquares() {
+
+            for (int y = 0; y < 8; y++)
+                for (int x = 0; x < 8; x++)
+                    yield return new Square(x, y);
+
+
+        }
     }
 }
