@@ -3,11 +3,11 @@ using System.Collections.Generic;
 
 namespace Chess
 {
-   struct Square {
+    struct Square {
 
         public static Square none = new Square(-1, -1);
-        public int x{ get; private set;}
-        public int y{ get; private set;}
+        public int x { get; private set; }
+        public int y { get; private set; }
 
 
         public Square(int x, int y) {
@@ -18,16 +18,15 @@ namespace Chess
         public Square(string e2) {
 
             if (e2.Length == 2 &&
-                e2[0] >= 'a' &&  e2[0] <=  'h' && 
-                e2[1] >= '1' &&  e2[1] <= '8')  {
+                e2[0] >= 'a' && e2[0] <= 'h' &&
+                e2[1] >= '1' && e2[1] <= '8') {
 
                 x = e2[0] - 'a';
                 y = e2[1] - '1';
-            }
-            else
+            } else
                 this = none;
 
-        } 
+        }
 
         public bool OnBoard() {
 
@@ -45,7 +44,7 @@ namespace Chess
 
         public static bool operator !=(Square a, Square b) {
 
-            return a.x != b.x && a.y != b.y;
+            return !(a==b);
         }
 
        public static IEnumerable<Square> YeldSquares() {

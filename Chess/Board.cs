@@ -29,9 +29,7 @@ namespace Chess
             InitColor(parts[1]);
             moveColor = parts[1] == "b" ? Color.black : Color.white  ;
             moveNumber = int.Parse(parts[5]);
-                           
-            SetFigureAt(new Square("a1"), Figure.whiteKing);
-            SetFigureAt(new Square("h8"), Figure.blackKing);
+        
             moveColor = Color.white;
         }
 
@@ -91,9 +89,9 @@ namespace Chess
 
         public Figure GetFigureAt(Square square) {
 
-            if (square.OnBoard()) {
+            if (square.OnBoard()) 
                 return figures[square.x,square.y];
-            }
+            
             return Figure.none;
         }
 
@@ -108,7 +106,7 @@ namespace Chess
 
             Board next = new Board(fen);
             next.SetFigureAt(fm.from, Figure.none);
-            next.SetFigureAt(fm.to, fm.promotion == Figure.none? fm.figure : fm.promotion );
+            next.SetFigureAt(fm.to, fm.promotion == Figure.none ? fm.figure : fm.promotion );
 
             if (moveColor == Color.black)
                 next.moveNumber++;
@@ -117,7 +115,40 @@ namespace Chess
             return next;
         }
 
-     
+        public bool IsCheck() {
 
+            Board after = new Board(fen);
+            after.moveColor = moveColor.FlipColor();
+            return after.CanEatKing();
+        }
+
+        public bool IsCheckAfterMove(FigureMoving fm) {
+
+            Board after = Move(fm);
+            return after.CanEatKing();
+        }
+
+        private bool CanEatKing() {
+            Square badKing = FindBadKing();
+            Moves moves = new Moves(this);
+
+            foreach (FigureOnSquare fs in YeldFigures()) {
+
+                FigureMoving fm = new FigureMoving(fs, badKing);
+                if (moves.CanMove(fm))
+                    return true;
+            }
+
+            return false;
+        }
+
+        private Square FindBadKing() {
+            Figure badKing = moveColor == Color.black ? Figure.whiteKing : Figure.blackKing;
+            foreach (Square square in Square.YeldSquares()) {
+                if (GetFigureAt(square) == badKing)
+                    return square;
+            }
+            return Square.none;
+        }
     }
 }

@@ -12,15 +12,13 @@ namespace Chess
         Board board;
 
         public Moves(Board board) {
-
             this.board = board;
         }
 
-        public bool CanMove(FigureMoving fm) {
+       public bool CanMove(FigureMoving fm) {
 
             this.fm = fm;
-
-            return CanMoveFrom() && CanMoveTo() && CanFigureMove();
+            return CanMoveFrom() && CanMoveTo() && CanFigureMove(); 
 
         }
 
@@ -38,7 +36,6 @@ namespace Chess
         bool CanFigureMove() {
 
             switch (fm.figure) {
-
                
                 case Figure.whiteKing:
                 case Figure.blackKing:
@@ -54,7 +51,7 @@ namespace Chess
 
                 case Figure.whiteBishop:
                 case Figure.blackBishop:
-                    return (fm.SingX != 0 && fm.SingY != 0) && CanStraightMove(); ;
+                    return (fm.SingX != 0 && fm.SingY != 0) && CanStraightMove(); 
 
                 case Figure.whiteKnight:
                 case Figure.blackKnight:
@@ -70,7 +67,43 @@ namespace Chess
         }
 
         private bool CanPawnMove() {
+            if (fm.from.y < 1 || fm.from.y > 6)
+                return false;
+            int stepY = fm.figure.GetColor() == Color.white ? 1 : -1;
+
+            return CanPawGo(stepY) || CanPawJamp(stepY) || CanPawEat(stepY);
            
+        }
+
+        private bool CanPawEat(int stepY) {
+
+            if (board.GetFigureAt(fm.to) != Figure.none)
+                if (fm.AbsDeltaX == 1)
+                    if (fm.DeltaY == stepY)
+                        return true;
+            return false;
+           
+        }
+
+        private bool CanPawJamp(int stepY) {
+            if (board.GetFigureAt(fm.to) == Figure.none)
+                if (fm.DeltaX == 0)
+                    if (fm.DeltaY == 2 * stepY)
+                        if (fm.from.y == 1 || fm.from.y == 6)
+                            if(board.GetFigureAt(new Square(fm.from.x, fm.from.y + stepY)) == Figure.none)
+                                return true;
+            return false;
+            
+        }
+
+
+        private bool CanPawGo(int stepY) {
+            if (board.GetFigureAt(fm.to) == Figure.none)
+                if(fm.DeltaX == 0)
+                    if(fm.DeltaY == stepY)
+                        return true;
+
+            return false;
         }
 
         private bool CanKingMove() {
